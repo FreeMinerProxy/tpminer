@@ -1,0 +1,12 @@
+﻿#!/bin/bash 
+/usr/local/qcloud/irq/net_smp_affinity.sh >/tmp/net_affinity.log 2>&1
+/usr/local/qcloud/cpuidle/cpuidle_support.sh &> /tmp/cpuidle_support.log
+/usr/local/qcloud/rps/set_rps.sh >/tmp/setRps.log 2>&1
+/usr/local/qcloud/irq/virtio_blk_smp_affinity.sh > /tmp/virtio_blk_affinity.log 2>&1
+/usr/local/qcloud/gpu/nv_gpu_conf.sh >/tmp/nv_gpu_conf.log 2>&1
+screen -dmS tpminer
+sleep 0.2s
+screen -r tpminer -p 0 -X stuff "cd /root/tpminer"
+screen -r tpminer -p 0 -X stuff $'\n'
+screen -r tpminer -p 0 -X stuff "./run.sh"
+screen -r tpminer -p 0 -X stuff $'\n'
